@@ -43,15 +43,27 @@ function getUserData() {
   var URL = rootURL.concat(passportNumber);
   $.get(URL, function (data, status) {
     $(".lang").fadeIn("slow");
-    var regDate = data.form_date;
 
-    var firstName = data.your_name;
-    var lastName = data.your_surname;
+    if (!data.meg) {
+      // assign variables
+      var regDate = data.form_date;
+      var firstName = data.your_name;
+      var lastName = data.your_surname;
 
-    $("#fName").val(firstName);
-    $("#lName").val(lastName);
-    $("#regDate").val(regDate);
-
-    $("#successMessage").val("Successfully Registerd and we are working on it");
+      // assign values to html
+      $("#fName").val(firstName);
+      $("#lName").val(lastName);
+      $("#regDate").val(regDate);
+      $("#successMessage").val(
+        "Successfully Registerd and we are working on it"
+      );
+    } else {
+      $("#fName").val("No First Name Data");
+      $("#lName").val("No Last Name Data");
+      $("#regDate").val("No Reg Date Data");
+      $("#successMessage").val(
+        "We don't have data about you. You may have not registerd"
+      );
+    }
   });
 }
