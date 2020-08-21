@@ -44,15 +44,12 @@ function getUserData() {
   $.get(URL, function (data, status) {
     $(".lang").fadeIn("slow");
     var regDate = data.form_date;
-    // var hd5opn = "<h5>Registerd at:- ";
-    // var hd5cls = "</h5>";
-    // var imd = hd5opn.concat(regDate);
-    // var regdatehtml = imd.concat(hd5cls);
-    // alert(regDate);
-    // set Html Values
 
-    // $("#personName").html("<h6>Your Name</h6>");
+    var firstName = data.your_name;
+    var lastName = data.your_surname;
 
+    $("#fName").val(firstName);
+    $("#lName").val(lastName);
     $("#regDate").val(regDate);
 
     $("#successMessage").val("Successfully Registerd and we are working on it");
