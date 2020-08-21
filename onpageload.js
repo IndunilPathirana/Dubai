@@ -44,7 +44,7 @@ function getUserData() {
   $.get(URL, function (data, status) {
     $(".lang").fadeIn("slow");
 
-    if (!data.meg) {
+    if (data.form_id) {
       // assign variables
       var regDate = data.form_date;
       var firstName = data.your_name;
