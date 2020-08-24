@@ -207,7 +207,7 @@ function getUserData(langnum) {
         });
       }
     },
-    timeout: 3000, // sets timeout to 3 seconds
+    timeout: 6000, // sets timeout to 6 seconds
   });
 }
 
