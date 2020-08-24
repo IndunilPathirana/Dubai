@@ -1,13 +1,67 @@
 $(document).ready(function () {
+  var langnum = 0;
+  //language change
+  $(".lang").fadeIn("slow");
+  $("#Register").hide();
+
+  $("#sinhalaemb").click(function () {
+    langnum = 0;
+    // $("#embnm").html("<h1>ශ්‍රි ලංකා තනාපති කාර්යලය</h1>");
+    // $("#title").html(' <h2 class="title">ලියාපදිංචි තොරතුරු</h2>');
+    $("#title").html(' <h2 class="title">ආයුබෝවන්!</h2>');
+    $("#welcomemsgpra").text(
+      "එක්සත් අරාබි එමීර් රාජ්‍යයේ ශ්‍රී ලාංකා තනාපති කාර්යාලය විසින් ක්‍රියාත්මක, ශ්‍රී ලාංකිකයන් නැවත මව්බිමට ගෙන්වා ගැනීම සඳහා වන ලියාපදිංචිය තහවුරු කරදීමේ ක්ෂණික නිල සේවාව සඳහා ඔබව ගෞරවයෙන් පිළිගනිමු!"
+    );
+    $("#passportNO").attr(
+      "placeholder",
+      "කරුණාකර ඔබගේ ගුවන් බලපත්‍ර අංකය යොදන්න."
+    );
+  });
+  $("#englishemb").click(function () {
+    langnum = 1;
+    // $("#embnm").html("<h1>Embassy of Sri Lanka</h1>");
+    // $("#title").html(' <h2 class="title"> Registration Info</h2>');
+    $("#title").html(' <h2 class="title"> Welcome !</h2>');
+    $("#welcomemsgpra").text(
+      "We welcome you to the repartiation registration status checking platform of Sri Lankan Embassy in the United Arab Emirates!"
+    );
+
+    $("#passportNO").attr(
+      "placeholder",
+      "You are kindly requested to enter your passport number to check the status."
+    );
+  });
+  $("#tamilemb").click(function () {
+    langnum = 2;
+
+    //     $("#embnm").html("<h1> இலங்கை தூதரகம் </h1>");
+    // $("#title").html(' <h2 class="title"> பதிவு தகவல்</h2>');
+
+    $("#title").html(' <h2 class="title"> வரவேற்பு !</h2>');
+    $("#welcomemsgpra").text(
+      "ஐக்கிய அரபு எமிரேட்ஸ் இலங்கை தூதரகத்திற்கு உங்களை வரவேற்கிறது."
+    );
+    $("#passportNO").attr(
+      "placeholder",
+      "நிலையைச் சரிபார்க்க உங்கள் பாஸ்போர்ட் எண்ணை உள்ளிடுமாறு கேட்டுக்கொள்ளப்படுகிறீர்கள்."
+    );
+  });
+
   $("#getDataButton").click(function () {
     // alert("Text: " + $("#passportNO").val());
     passportNumber = $("#passportNO").val();
     // $("#pptno").html(passportNumber);
-    getUserData();
+    getUserData(langnum);
     // alert(passportNumber);N1234567
-  });
 
-  $(".lang").hide();
+    if (langnum == 0) {
+      $("#title").html(' <h2 class="title">ලියාපදිංචි තොරතුරු</h2>');
+    } else if (langnum == 1) {
+      $("#title").html(' <h2 class="title"> Registration Info</h2>');
+    } else if (langnum == 2) {
+      $("#title").html(' <h2 class="title"> பதிவு தகவல்</h2>');
+    }
+  });
 
   //   alert("Hello");
 });
@@ -20,7 +74,7 @@ var passportNumber;
 
 var firstName = "Indunil";
 var registerdDate;
-function getUserData() {
+function getUserData(langnum) {
   var URL = rootURL.concat(passportNumber);
 
   $.ajax({
@@ -31,7 +85,6 @@ function getUserData() {
     },
     success: function (data, status) {
       //do something
-      $(".lang").fadeIn("slow");
 
       if (data.meg && data.meg == "No data exist") {
         $("#fName").val("No First Name Data");
@@ -41,17 +94,40 @@ function getUserData() {
           "We don't have data about you. You may have not registerd"
         );
 
+        $("#Register").fadeIn("slow");
+
+        if (langnum == 0) {
+          $("#welcomemsgpra").text(
+            "කනගාටුයි! ඔබගේ ලියාපදිංචිය තහවුරු කළ නොහැක. කරුණාකර ලියාපදිංචිය සඳහා පහත සඳහන් යොමුවට පිවිසෙන්න."
+          );
+        } else if (langnum == 1) {
+          $("#welcomemsgpra").text(
+            "Sorry! Your registration could not be verified. Kindly visit the link below to register."
+          );
+        } else if (langnum == 2) {
+          $("#successMessage").val(
+            "மன்னிக்கவும், உங்களைப் பற்றிய தரவு எங்களிடம் இல்லை"
+          );
+        }
+
         $("#sinhalaemb").click(function () {
           // $("#embnm").html("<h1>ශ්‍රි ලංකා තනාපති කාර්යලය</h1>");
           $("#title").html(' <h2 class="title">ලියාපදිංචි තොරතුරු</h2>');
 
           $("#successMessage").val("කනගාටුයි අප සතුව ඔබගේ තොරතුරු නොමැත");
+
+          $("#welcomemsgpra").text(
+            "කනගාටුයි! ඔබගේ ලියාපදිංචිය තහවුරු කළ නොහැක. කරුණාකර ලියාපදිංචිය සඳහා පහත සඳහන් යොමුවට පිවිසෙන්න."
+          );
         });
         $("#englishemb").click(function () {
           // $("#embnm").html("<h1>Embassy of Sri Lanka</h1>");
           $("#title").html(' <h2 class="title"> Registration Info</h2>');
 
           $("#successMessage").val("Sorry We don't have data about you");
+          $("#welcomemsgpra").text(
+            "Sorry! Your registration could not be verified. Kindly visit the link below to register."
+          );
         });
         $("#tamilemb").click(function () {
           //     $("#embnm").html("<h1> இலங்கை தூதரகம் </h1>");
@@ -60,20 +136,25 @@ function getUserData() {
           $("#successMessage").val(
             "மன்னிக்கவும், உங்களைப் பற்றிய தரவு எங்களிடம் இல்லை"
           );
+
+          $("#welcomemsgpra").text(
+            "மன்னிக்கவும்! உங்கள் பதிவை சரிபார்க்க முடியவில்லை. பதிவு செய்ய தயவுசெய்து கீழேயுள்ள இணைப்பைப் பார்வையிடவும்."
+          );
         });
 
-        // Get the modal
-        var modal = document.getElementById("myModal");
+        // // Get the modal
+        // var modal = document.getElementById("myModal");
 
-        modal.style.display = "block";
+        // //display the model
+        // modal.style.display = "block";
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-          if (event.target == modal) {
-            location.reload();
-            modal.style.display = "none";
-          }
-        };
+        // // When the user clicks anywhere outside of the modal, close it
+        // window.onclick = function (event) {
+        //   if (event.target == modal) {
+        //     location.reload();
+        //     modal.style.display = "none";
+        //   }
+        // };
       } else {
         // assign variables
         var regDate = data.form_date;
@@ -87,6 +168,20 @@ function getUserData() {
         $("#successMessage").val(
           "Successfully Registerd and we are working on it"
         );
+
+        if (langnum == 0) {
+          $("#welcomemsgpra").text(
+            "ඔබගේ ලියාපදිංචිය තහවුරු බව සතුටින් දන්වා සිටිමු. ගුවන්ගත වීමේ ක්‍රියාවලිය සඳහා අප තානාපති කාර්යාල නිලධාරියකු හැකි ඉක්මනින් ඔබව අමතනු ඇත. ස්තුතියි!"
+          );
+        } else if (langnum == 1) {
+          $("#welcomemsgpra").text(
+            "We are pleased to announce that your registration has been confirmed.An embassy official will contact you soon upon receipt of confirmation of flight schedules.Thank you!"
+          );
+        } else if (langnum == 2) {
+          $("#successMessage").val(
+            "உங்கள் பதிவு உறுதிப்படுத்தப்பட்டுள்ளதாக அறிவிப்பதில் நாங்கள் மகிழ்ச்சியடைகிறோம்.விமான அட்டவணைகளை உறுதிப்படுத்தியவுடன் தூதரக அதிகாரி ஒருவர் விரைவில் உங்களைத் தொடர்புகொள்வார்."
+          );
+        }
 
         $("#sinhalaemb").click(function () {
           // $("#embnm").html("<h1>ශ්‍රි ලංකා තනාපති කාර්යලය</h1>");
