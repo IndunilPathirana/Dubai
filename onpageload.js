@@ -118,7 +118,7 @@ function getUserData(langnum) {
           );
         } else if (langnum == 1) {
           $("#welcomemsgpra").text(
-            "Sorry! Your registration could not be verified. Kindly visit the link below to register."
+            "Sorry! Your Registration cannot be verified. Kindly click below button to Register."
           );
         } else if (langnum == 2) {
           $("#successMessage").val(
@@ -142,7 +142,7 @@ function getUserData(langnum) {
 
           $("#successMessage").val("Sorry We don't have data about you");
           $("#welcomemsgpra").text(
-            "Sorry! Your registration could not be verified. Kindly visit the link below to register."
+            "Sorry! Your registration could not be verified. Kindly click below button to Register."
           );
         });
         $("#tamilemb").click(function () {
